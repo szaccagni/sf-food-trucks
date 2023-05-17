@@ -10,8 +10,14 @@
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [-122.44117856050858, 37.75016596273157],
-      zoom:11
+      zoom: 11
     });
+    map.addControl(
+      new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+      })
+    );
     const geojson = {
       type: 'FeatureCollection',
       features : []
@@ -69,6 +75,7 @@
         popup.remove();
       });
       })
-    })  
+    })
+
   </script>
 <%- include('./partials/footer') %> 
