@@ -6,29 +6,16 @@
   <div id="map"></div>
   <script>
     mapboxgl.accessToken = '<%= mapbox_token %>' 
-    navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
-        enableHighAccuracy: true
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-122.4194, 37.7749],
+      zoom: 10
     });
-
-    function createMap(center) {
-        return new mapboxgl.Map({
-          container: 'map',
-          style: 'mapbox://styles/mapbox/streets-v11',
-          center: center,
-          zoom: 10
-        });
-    }
-
-    function successLocation(position) {
-        const { latitude, longitude } = position.coords;
-        const center = [longitude, latitude];
-        const map = createMap(center);
-        new mapboxgl.Marker().setLngLat(center).addTo(map);
-    }
-
-    function errorLocation() {
-        const center = [-122.4194, 37.7749];
-        const map = createMap(center);
-    }
+    <% coordinates.forEach(coord => { %>
+      new mapboxgl.Marker()
+        .setLngLat([<%=coord[0]%>, <%=coord[1]%>])
+        .addTo(map);
+    <% }) %> 
   </script>
 <%- include('./partials/footer') %>
