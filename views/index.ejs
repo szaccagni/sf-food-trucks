@@ -19,23 +19,56 @@
     <% coordinates.forEach( coord => { %>
       geojson.features.push({
             type: 'Feature', 
+            properties : {
+              description : 
+                '<strong>Make it Mount Pleasant</strong><p>Make it Mount Pleasant is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>'
+            },
             geometry: {
               type: 'Point',
               coordinates: [<%= coord[0] %>, <%= coord[1] %>]
         }})
     <% }) %>
 
-    for (const feature of geojson.features) {
-      const el = document.createElement('div');
-      el.className = 'marker-custom';
-      new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
-    }
-
-    <% if (search) { %>
-      new mapboxgl.Marker({
-        color : '#00FF00'
-      }).setLngLat([-122.4194, 37.7749])
-      .addTo(map)
-    <% } %>
+    map.on('load', () => {
+      map.loadImage('https://cdn-icons-png.flaticon.com/512/1046/1046762.png', (error,image) => {
+        if (error) throw error
+        map.addImage('food-truck', image)
+        map.addSource('trucks', {
+          type: 'geojson',
+          data: geojson
+        })
+        map.addLayer({
+          id: 'trucks',
+          source: 'trucks',
+          type: 'symbol',
+          layout: {
+            'icon-image': 'food-truck',
+            'icon-size': .1,
+            'icon-allow-overlap': true
+          }
+      })    
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
+      map.on('mouseenter', 'trucks', (e) => {
+        map.getCanvas().style.cursor = 'pointer';
+    
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const description = e.features[0].properties.description;
+      
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+      
+        popup.setLngLat(coordinates).setHTML(description).addTo(map);
+      });
+      
+      map.on('mouseleave', 'trucks', () => {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+      });
+      })
+    })  
   </script>
 <%- include('./partials/footer') %> 
