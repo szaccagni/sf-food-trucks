@@ -12,10 +12,30 @@
       center: [-122.4194, 37.7749],
       zoom: 10
     });
-    <% coordinates.forEach(coord => { %>
-      new mapboxgl.Marker()
-        .setLngLat([<%=coord[0]%>, <%=coord[1]%>])
-        .addTo(map);
-    <% }) %> 
+    const geojson = {
+      type: 'FeatureCollection',
+      features : []
+    }
+    <% coordinates.forEach( coord => { %>
+      geojson.features.push({
+            type: 'Feature', 
+            geometry: {
+              type: 'Point',
+              coordinates: [<%= coord[0] %>, <%= coord[1] %>]
+        }})
+    <% }) %>
+
+    for (const feature of geojson.features) {
+      const el = document.createElement('div');
+      el.className = 'marker-custom';
+      new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+    }
+
+    <% if (search) { %>
+      new mapboxgl.Marker({
+        color : '#00FF00'
+      }).setLngLat([-122.4194, 37.7749])
+      .addTo(map)
+    <% } %>
   </script>
-<%- include('./partials/footer') %>
+<%- include('./partials/footer') %> 

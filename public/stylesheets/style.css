@@ -12,3 +12,11 @@ a {
   width: 50%;
   height: 600px;
 }
+
+.marker-custom {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/1046/1046762.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
