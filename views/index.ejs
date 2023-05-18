@@ -1,5 +1,17 @@
 <%- include('./partials/header') %>
-  <div id="map"></div>
+  <nav>
+    <div class="nav-img-container"><img src="/images/CURB-CUSINE.png"></div>
+    <div id="geocoder" class="geocoder"></div>  
+  </nav>
+
+  <div class="container">
+    <!-- <div class="left-panel">
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore saepe quae autem molestias optio unde praesentium sequi ipsam aliquid exercitationem itaque officia, odit quo nulla iste explicabo iure aliquam dolorum.</p>
+    </div> -->
+    <div id="map"></div>
+  </div>
+  
+  
   <script>
     mapboxgl.accessToken = '<%= mapbox_token %>' 
     const map = new mapboxgl.Map({
@@ -8,12 +20,13 @@
       center: [-122.44117856050858, 37.75016596273157],
       zoom: 11
     });
-    map.addControl(
-      new MapboxGeocoder({
+    const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl
+        mapboxgl: mapboxgl,
+        placeholder: 'Search by Location'
       })
-    );
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
     const geojson = {
       type: 'FeatureCollection',
       features : []

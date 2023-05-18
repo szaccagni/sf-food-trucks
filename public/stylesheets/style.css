@@ -1,5 +1,9 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  padding: 50px;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,16 +11,39 @@ a {
   color: #00B7FF;
 }
 
-#map {
-  margin-top: 25px;
-  width: 50%;
-  height: 600px;
+nav {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid lightgray;
 }
 
-/* .marker-custom {
-  background-image: url('https://cdn-icons-png.flaticon.com/512/1046/1046762.png');
-  background-size: cover;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-} */
+nav div {
+  margin: 0 15px;
+}
+
+#map {
+  width: 100%;
+}
+
+.nav-img-container {
+  width: 50%;
+  text-align: end;
+}
+
+
+.geocoder {
+  width: 50%
+}
+
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+  width: auto !important;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 150px);
+}
