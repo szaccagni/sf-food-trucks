@@ -19,3 +19,4 @@ Prompt: Create a service that tells the user what types of food trucks might be 
 Items slated for future development include: 
 * Adding the ability to filter by food item(s)
 * Incorporating scheduling details
+* Improve mobile experience
