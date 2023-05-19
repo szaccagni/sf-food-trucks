@@ -57,4 +57,11 @@ nav div {
   nav div:not(:last-of-type)  {
     margin-bottom: 15px;
   }
+  .nav-img-container {
+    width: 100%;
+    text-align: center;
+  }
+  .geocoder {
+    width: 100%
+  }  
 }
