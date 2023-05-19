@@ -4,7 +4,7 @@ Built for the Software Engineering Super League (SESL) using Mobile Food Facilit
 Prompt: Create a service that tells the user what types of food trucks might be found near a specific location on a map. Please submit a link to a hosted web app. The data is available on DataSF: https://data.sfgov.org/Economy-and-Community/Mobile-Food-Facility-Permit/rqzj-sfat
 
 # Preview 
-![preview](/public/images/curb-cuisine-preview.png)
+![preview](/public/images/curb-cuisine-preview.jpeg)
 
 # Technologies 
 * HTML
