@@ -1,13 +1,35 @@
 <%- include('./partials/header') %>
-  <nav>
+  <div class="search-bar">
     <div class="nav-img-container"><img src="/images/CURB-CUSINE.png"></div>
-    <div id="geocoder" class="geocoder"></div>  
-  </nav>
+    <div id="geocoder" class="geocoder"></div> 
+  </div>
 
   <div class="container">
-    <!-- <div class="left-panel">
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore saepe quae autem molestias optio unde praesentium sequi ipsam aliquid exercitationem itaque officia, odit quo nulla iste explicabo iure aliquam dolorum.</p>
-    </div> -->
+    <div class="map-filter map-filter-icon <%= filter ? 'close' : '' %>" id="filter"><img src="/images/filter.png"></div>
+    <div class="map-filter map-filter-card <%= filter ? '' : 'close' %> " id="filterCard">
+      <div class="card-title-bar">
+        <div id="close-card">X</div>
+      </div>
+      <div>
+        <form class="filter-form" action="/filter" method="POST">
+          <% if (filter) { %>
+            <div class="filter-text">
+                Filtering By <strong><%= filter %></strong>
+            </div>
+          <% } %>
+          <input type="text" id="foodInput" name="foodInput" placeholder="food items i.e. burgers" onkeyup="fetchFoodSuggestions(this.value)">
+          <input type="submit" value="filter" class="filter-submit">
+          <div id="suggestionsContainer"></div>
+        </form>
+      </div>
+      <% if (filter) { %>
+        <div>
+          <form class="filter-form" action="/reset" method="POST">
+            <input type="submit" value="reset" class="filter-submit">
+          </form>
+        </div>
+      <% } %>
+    </div>
     <div id="map"></div>
   </div>
   
@@ -32,7 +54,8 @@
       features : []
     }
     <% trucks.forEach( truck => { %>
-      geojson.features.push({
+      if (<%= truck.coordinates[0] %> !== 0 && <%= truck.coordinates[1] !== 0 %>) {
+        geojson.features.push({
             type: 'Feature', 
             properties : {
               description : 
@@ -42,6 +65,7 @@
               type: 'Point',
               coordinates: [<%= truck.coordinates[0] %>, <%= truck.coordinates[1] %>]
         }})
+      }
     <% }) %>
 
     map.on('load', () => {
