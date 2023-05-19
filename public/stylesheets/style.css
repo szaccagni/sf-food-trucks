@@ -47,3 +47,14 @@ nav div {
   display: flex;
   height: calc(100vh - 150px);
 }
+
+@media screen and (max-width: 600px) {
+  nav {
+    height: 200px;
+    flex-direction: column;
+    padding: auto;
+  }
+  nav div:not(:last-of-type)  {
+    margin-bottom: 15px;
+  }
+}
