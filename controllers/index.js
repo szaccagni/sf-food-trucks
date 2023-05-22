@@ -4,7 +4,8 @@ module.exports = {
     index, 
     foodSuggestions,
     filter,
-    resetFilter
+    resetFilter,
+    test
 }
 
 async function index(req, res) {
@@ -22,13 +23,20 @@ function foodSuggestions(req, res) {
     res.json(matchingSuggestions);
 }
 
-function filter(req, res) {
+async function filter(req, res) {
     const query = req.body.foodInput
-    Truck.filterTrucks(query)
+    await Truck.filterTrucks(query)
     res.redirect('/')
 }
 
 function resetFilter(req, res) {
     Truck.resetFilter()
     res.redirect('/')
+}
+
+async function test(req, res) {
+    // const items = Truck.getItemList()
+    const filterBy = Truck.getFilteredBy()
+    const trucks = await Truck.getTrucks()
+    res.render('test', {image: '/images/CURB-CUISIN-SQR.png', description: 'SF CURB CUISINE', title: 'testing', trucks, filter:filterBy})
 }

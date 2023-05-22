@@ -46,18 +46,24 @@ async function getTrucks() {
 }
 
 function getItemList() {
-    return ITEMSLIST.map(el => {
+    return ITEMSLIST.filter((item, index) => ITEMSLIST.indexOf(item) === index).map(el => {
         el.toLowerCase()
         return el.slice(0,1).toUpperCase()+el.slice(1,el.length)
-      }).filter((item, index) => ITEMSLIST.indexOf(item) === index).sort()
+      }).sort()
 }
 
-function filterTrucks(term) {
-    TRUCKS.forEach(el => {
-        if (el.sells.includes(term)) FILTERED.push(el)
+async function filterTrucks(term) {
+    FILTERED = []
+    Promise.resolve(
+        TRUCKS.forEach(el => {
+            if (el.sells.toLowerCase().includes(term.toLowerCase())) {
+                FILTERED.push(el)
+            }
+        })
+    ).then( () => {
+        FILTERBY = term
+        return
     })
-    FILTERBY = term
-    return
 }
 
 function resetFilter() {

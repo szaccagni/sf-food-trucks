@@ -1,0 +1,6 @@
+<%- include('./partials/header') %>
+    <div><%= filter %> </div>
+    <% trucks.forEach( truck => { %>
+        <div><%= truck.name %> - <%= truck.sells %></div>
+    <% }) %>
+<%- include('./partials/footer') %> 
